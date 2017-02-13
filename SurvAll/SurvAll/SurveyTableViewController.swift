@@ -68,8 +68,8 @@ class SurveyTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return self.allData.count
     }
-
     
+ 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
@@ -77,6 +77,19 @@ class SurveyTableViewController: UITableViewController {
         cell.detailTextLabel?.text = self.detailData[indexPath.row]
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let title = self.allData[indexPath.row]
+        performSegue(withIdentifier: "moveToQuestions", sender: title)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let VC = segue.destination as! SelectTitleViewController
+        VC.surveyTitle = sender as! String
+    }
+    
+    
+    
 
 
     /*

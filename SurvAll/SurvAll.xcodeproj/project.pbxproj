@@ -15,6 +15,7 @@
 		AB6778081E5114E300736B2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB6778061E5114E300736B2C /* LaunchScreen.storyboard */; };
 		AB6778131E5114E300736B2C /* SurvAllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6778121E5114E300736B2C /* SurvAllTests.swift */; };
 		AB67781E1E5114E400736B2C /* SurvAllUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB67781D1E5114E400736B2C /* SurvAllUITests.swift */; };
+		AB8075471E521582007F0790 /* SelectTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8075461E521582007F0790 /* SelectTitleViewController.swift */; };
 		ABC9D3D31E51E8CC000A65E4 /* SurveyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9D3D21E51E8CC000A65E4 /* SurveyTableViewController.swift */; };
 		ABC9D3D51E51E9B7000A65E4 /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9D3D41E51E9B7000A65E4 /* HTTPRequest.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		AB6778191E5114E400736B2C /* SurvAllUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SurvAllUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB67781D1E5114E400736B2C /* SurvAllUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurvAllUITests.swift; sourceTree = "<group>"; };
 		AB67781F1E5114E400736B2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB8075461E521582007F0790 /* SelectTitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectTitleViewController.swift; sourceTree = "<group>"; };
 		ABC9D3D21E51E8CC000A65E4 /* SurveyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyTableViewController.swift; sourceTree = "<group>"; };
 		ABC9D3D41E51E9B7000A65E4 /* HTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 				AB6778091E5114E300736B2C /* Info.plist */,
 				AB6778011E5114E300736B2C /* SurvAll.xcdatamodeld */,
 				ABC9D3D21E51E8CC000A65E4 /* SurveyTableViewController.swift */,
+				AB8075461E521582007F0790 /* SelectTitleViewController.swift */,
 				ABC9D3D41E51E9B7000A65E4 /* HTTPRequest.swift */,
 			);
 			path = SurvAll;
@@ -274,6 +277,7 @@
 				AB6777FD1E5114E300736B2C /* ViewController.swift in Sources */,
 				AB6778031E5114E300736B2C /* SurvAll.xcdatamodeld in Sources */,
 				ABC9D3D51E51E9B7000A65E4 /* HTTPRequest.swift in Sources */,
+				AB8075471E521582007F0790 /* SelectTitleViewController.swift in Sources */,
 				AB6777FB1E5114E300736B2C /* AppDelegate.swift in Sources */,
 				ABC9D3D31E51E8CC000A65E4 /* SurveyTableViewController.swift in Sources */,
 			);
