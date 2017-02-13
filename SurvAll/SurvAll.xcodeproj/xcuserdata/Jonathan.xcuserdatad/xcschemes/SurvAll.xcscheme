@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AB67776C1E50B8FA00736B2C"
+               BlueprintIdentifier = "AB6777F61E5114E300736B2C"
                BuildableName = "SurvAll.app"
                BlueprintName = "SurvAll"
                ReferencedContainer = "container:SurvAll.xcodeproj">
@@ -28,11 +28,31 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AB67780D1E5114E300736B2C"
+               BuildableName = "SurvAllTests.xctest"
+               BlueprintName = "SurvAllTests"
+               ReferencedContainer = "container:SurvAll.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AB6778181E5114E400736B2C"
+               BuildableName = "SurvAllUITests.xctest"
+               BlueprintName = "SurvAllUITests"
+               ReferencedContainer = "container:SurvAll.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AB67776C1E50B8FA00736B2C"
+            BlueprintIdentifier = "AB6777F61E5114E300736B2C"
             BuildableName = "SurvAll.app"
             BlueprintName = "SurvAll"
             ReferencedContainer = "container:SurvAll.xcodeproj">
@@ -55,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AB67776C1E50B8FA00736B2C"
+            BlueprintIdentifier = "AB6777F61E5114E300736B2C"
             BuildableName = "SurvAll.app"
             BlueprintName = "SurvAll"
             ReferencedContainer = "container:SurvAll.xcodeproj">
@@ -74,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AB67776C1E50B8FA00736B2C"
+            BlueprintIdentifier = "AB6777F61E5114E300736B2C"
             BuildableName = "SurvAll.app"
             BlueprintName = "SurvAll"
             ReferencedContainer = "container:SurvAll.xcodeproj">
