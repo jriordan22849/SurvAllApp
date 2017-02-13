@@ -11,6 +11,7 @@ import UIKit
 class SurveyTableViewController: UITableViewController {
 
     var allData = [String]()
+    var detailData = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,7 @@ class SurveyTableViewController: UITableViewController {
                             if let surveyRow = survey["fields"] as? [String:Any] {
                                 
                                 self.allData.append(surveyRow["title"] as! String)
+                                self.detailData.append(surveyRow["numOfQuestions"] as! String)
                                 self.tableView.reloadData()
                             }
                         }
@@ -72,7 +74,7 @@ class SurveyTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
         cell.textLabel?.text = self.allData[indexPath.row]
-
+        cell.detailTextLabel?.text = self.detailData[indexPath.row]
         return cell
     }
 
