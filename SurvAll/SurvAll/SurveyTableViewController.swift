@@ -42,6 +42,7 @@ class SurveyTableViewController: UITableViewController {
                                 
                                 self.allData.append(surveyRow["title"] as! String)
                                 self.detailData.append(surveyRow["numOfQuestions"] as! String)
+                                //print(self.allData)
                                 self.tableView.reloadData()
                             }
                         }
