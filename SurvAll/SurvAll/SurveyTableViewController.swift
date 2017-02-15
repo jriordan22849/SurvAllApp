@@ -12,6 +12,7 @@ class SurveyTableViewController: UITableViewController {
 
     var allData = [String]()
     var detailData = [String]()
+    var surveyCreated = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,7 @@ class SurveyTableViewController: UITableViewController {
                                 
                                 self.allData.append(surveyRow["title"] as! String)
                                 self.detailData.append(surveyRow["numOfQuestions"] as! String)
+                                self.surveyCreated.append(surveyRow["dateSurvCreated"] as! String)
                                 //print(self.allData)
                                 self.tableView.reloadData()
                             }
@@ -75,13 +77,15 @@ class SurveyTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
         cell.textLabel?.text = self.allData[indexPath.row]
-        cell.detailTextLabel?.text = self.detailData[indexPath.row]
+        cell.detailTextLabel?.text = "Number of Questions: \(self.detailData[indexPath.row])"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let title = self.allData[indexPath.row]
+        //let numQues = self.detailData[indexPath.row]
         performSegue(withIdentifier: "moveToQuestions", sender: title)
+//        performSegue(withIdentifier: "moveToQuestions", sender: numQues)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -89,8 +93,7 @@ class SurveyTableViewController: UITableViewController {
         VC.surveyTitle = sender as! String
     }
     
-    
-    
+
 
 
     /*

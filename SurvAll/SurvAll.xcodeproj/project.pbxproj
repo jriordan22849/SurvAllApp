@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB2492BA1E533974002652E6 /* surveyDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2492B91E533974002652E6 /* surveyDetailTableViewController.swift */; };
 		AB6777FB1E5114E300736B2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6777FA1E5114E300736B2C /* AppDelegate.swift */; };
 		AB6777FD1E5114E300736B2C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6777FC1E5114E300736B2C /* ViewController.swift */; };
 		AB6778001E5114E300736B2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB6777FE1E5114E300736B2C /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB2492B91E533974002652E6 /* surveyDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = surveyDetailTableViewController.swift; sourceTree = "<group>"; };
 		AB6777F71E5114E300736B2C /* SurvAll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurvAll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6777FA1E5114E300736B2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB6777FC1E5114E300736B2C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				ABC9D3D21E51E8CC000A65E4 /* SurveyTableViewController.swift */,
 				AB8075461E521582007F0790 /* SelectTitleViewController.swift */,
 				ABC9D3D41E51E9B7000A65E4 /* HTTPRequest.swift */,
+				AB2492B91E533974002652E6 /* surveyDetailTableViewController.swift */,
 			);
 			path = SurvAll;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				AB8075471E521582007F0790 /* SelectTitleViewController.swift in Sources */,
 				AB6777FB1E5114E300736B2C /* AppDelegate.swift in Sources */,
 				ABC9D3D31E51E8CC000A65E4 /* SurveyTableViewController.swift in Sources */,
+				AB2492BA1E533974002652E6 /* surveyDetailTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +437,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = P6M4RFW988;
 				INFOPLIST_FILE = SurvAll/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Jonathan-Riordan.SurvAll";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,7 +451,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = P6M4RFW988;
 				INFOPLIST_FILE = SurvAll/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Jonathan-Riordan.SurvAll";
 				PRODUCT_NAME = "$(TARGET_NAME)";
