@@ -12,8 +12,6 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var questionField: UILabel!
-    
-    
     @IBOutlet weak var answerTable: UITableView!
 
     var surveyTitle = "No Title"
@@ -25,7 +23,9 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     var questionNumber = [String]()
     var questionType = [String]()
     var numberOfAnswers = [NSNumber]()
-    
+    var surveyCreated = "No Creation Date"
+    var numQues = "No Questions"
+    var timesCompleted = ""
     var answerLabel = [String]()
     var questionTypeField = [String]()
 
@@ -47,7 +47,6 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         }
         if currentQuestionCounter >= questionLabel.count {
             currentQuestionCounter = 0
-
         }
     }
     
@@ -55,6 +54,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.answerTable.tableFooterView = UIView()
         
         print("\n\n\nSurvet Title \(surveyTitle)")
         // print(surveyTitle)
@@ -63,11 +63,14 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         self.getAllQuestions()
        
         
+        // Reformat string
+        let newDate = remformatDate(date: surveyCreated)
+        
         // Display information regarding each survey.
         questionField.text =  "Survey Details:"
-        answerLabel.append("Number of Questions: \(numOfQuestions)")
-        answerLabel.append("Survey Created: \(surveyCreatedField)")
-        answerLabel.append("Times Completed: \(timesCompletedField)")
+        answerLabel.append("Number of Questions: \(numQues)")
+        answerLabel.append("Survey Created: \(newDate)")
+        answerLabel.append("Times Completed: \(timesCompleted)")
         
         
         answerTable.dataSource = self
@@ -75,6 +78,24 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
 
         // Do any additional setup after loading the view.
     }
+    
+    // Reformat date string to only display the first 10 characters.
+    func remformatDate(date: String) -> String {
+
+        let index = date.index(date.startIndex, offsetBy: 10)
+        return(date.substring(to: index))
+
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let answerPicked = self.answerLabel[indexPath.row]
+        print("Answer picked is: \(answerPicked)")
+        //let numQues = self.detailData[indexPath.row]
+        //performSegue(withIdentifier: "moveToQuestions", sender: title)
+        //        performSegue(withIdentifier: "moveToQuestions", sender: numQues)
+    }
+    
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.answerLabel.count
@@ -84,27 +105,26 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         let cell = UITableViewCell()
         
         if answerLabel[currentAnswer].range(of: "https://cdn.pixabay.com") != nil{
+
             let catPictureURL = URL(string: answerLabel[currentAnswer])!
             
             let session = URLSession(configuration: .default)
-            
-            // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+
             let downloadPicTask = session.dataTask(with: catPictureURL) { (data, response, error) in
                 // The download has finished.
                 if let e = error {
                     print("Error downloading cat picture: \(e)")
                 } else {
-                    // No errors found.
-                    // It would be weird if we didn't have a response, so check for that too.
+
                     if let res = response as? HTTPURLResponse {
-                        print("Downloaded cat picture with response code \(res.statusCode)")
+                        print("Downloaded picture:  \(res.statusCode)")
                         if let imageData = data {
                             // Finally convert that Data into an image and do what you wish with it.
                             let image = UIImage(data: imageData)
-                            cell.imageView!.image = image
-                            // Do something with your image.
+                            cell.imageView?.image = image
+                            cell.setNeedsLayout()
                         } else {
-                            print("Couldn't get image: Image is nil")
+                            print("Image not found")
                         }
                     } else {
                         print("Couldn't get response code for some reason")
@@ -114,8 +134,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             
             downloadPicTask.resume()
         } else {
+            // Set cell colour, cell text colour and line seperator colour
             cell.textLabel?.text = answerLabel[currentAnswer]
         }
+        cell.backgroundColor = UIColor.clear
+        cell.textLabel?.textColor = UIColor.white
         
         currentAnswer = currentAnswer + 1
         return cell
@@ -205,18 +228,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                                     self.questionLabel.append(surveyRow["questionLabel"] as! String)
                                     self.numberOfAnswers.append(surveyRow["numberOfAnswers"] as! NSNumber)
                                 }
-                                
-                                
-                                //let fiteredArray = (self.surveybelongto ).filter { $0 == self.surveyTitle }
-                                //print(self.questionLabel)
-                                //self.detailData.append(surveyRow["numOfQuestions"] as! String)
-                                //self.tableView.reloadData()
+
                             }
                         }
                     }
-//                    print("Questions \(self.questionLabel)")
-//                    print("Number of Questions \(self.questionLabel.count)")
-//                    print("Number of answers for each questions \(self.numberOfAnswers)")
                     
                 }
             }

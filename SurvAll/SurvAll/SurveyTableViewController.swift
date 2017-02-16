@@ -13,9 +13,16 @@ class SurveyTableViewController: UITableViewController {
     var allData = [String]()
     var detailData = [String]()
     var surveyCreated = [String]()
+    var completed = [String]()
+    
+    var titleSurvey = ""
+    var numQues = ""
+    var surveyCreation = ""
+    var timesCompleted = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.tableFooterView = UIView()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -44,6 +51,7 @@ class SurveyTableViewController: UITableViewController {
                                 self.allData.append(surveyRow["title"] as! String)
                                 self.detailData.append(surveyRow["numOfQuestions"] as! String)
                                 self.surveyCreated.append(surveyRow["dateSurvCreated"] as! String)
+                                self.completed.append(surveyRow["numOfTimesCompleted"] as! String)
                                 //print(self.allData)
                                 self.tableView.reloadData()
                             }
@@ -82,15 +90,20 @@ class SurveyTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let title = self.allData[indexPath.row]
-        //let numQues = self.detailData[indexPath.row]
-        performSegue(withIdentifier: "moveToQuestions", sender: title)
+        titleSurvey = self.allData[indexPath.row]
+        numQues = self.detailData[indexPath.row]
+        surveyCreation = self.surveyCreated[indexPath.row]
+        timesCompleted = self.completed[indexPath.row]
+        performSegue(withIdentifier: "moveToQuestions", sender: self)
 //        performSegue(withIdentifier: "moveToQuestions", sender: numQues)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let VC = segue.destination as! SelectTitleViewController
-        VC.surveyTitle = sender as! String
+        let vc = segue.destination as! SelectTitleViewController
+        vc.surveyTitle = titleSurvey
+        vc.numQues = numQues
+        vc.surveyCreated = surveyCreation
+        vc.timesCompleted = timesCompleted
     }
     
 
