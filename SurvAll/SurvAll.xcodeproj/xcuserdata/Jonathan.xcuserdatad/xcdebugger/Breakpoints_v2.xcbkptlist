@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SurvAll/SurveyTableViewController.swift"
-            timestampString = "508948074.763144"
+            timestampString = "508952097.911146"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "SurveyTableViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SurvAll/SurveyTableViewController.swift"
-            timestampString = "508948074.763144"
+            filePath = "SurvAll/SelectTitleViewController.swift"
+            timestampString = "508959805.542609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SurvAll/SelectTitleViewController.swift"
-            timestampString = "508948507.015521"
+            timestampString = "508962699.59894"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "getAllAnswers()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

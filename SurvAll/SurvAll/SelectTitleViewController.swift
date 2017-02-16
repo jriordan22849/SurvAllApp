@@ -28,25 +28,32 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     var timesCompleted = ""
     var answerLabel = [String]()
     var questionTypeField = [String]()
+    
+    var scaleMin = [NSNumber]()
+    var scaleMax = [NSNumber]()
 
 
     var currentQuestionCounter = 0
     var currentQuestion = ""
     var currentAnswer = 0
     
+    
+    var selectedAnswers = [String]()
     @IBAction func nextButton(_ sender: UIButton) {
 
         //print(questionLabel[currentQuestionCounter])
-        //var tempCounter = 0
+        var tempCounter = questionLabel.count
+        tempCounter = tempCounter + 1
         
-        if currentQuestionCounter < questionLabel.count {
+        if currentQuestionCounter < tempCounter {
             questions()
             self.answerTable.reloadData()
             currentAnswer = 0
             currentQuestionCounter += 1
         }
-        if currentQuestionCounter >= questionLabel.count {
+        if currentQuestionCounter >= tempCounter {
             currentQuestionCounter = 0
+            performSegue(withIdentifier: "endOfSurvey", sender: self)
         }
     }
     
@@ -79,6 +86,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         // Do any additional setup after loading the view.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+    }
+    
     // Reformat date string to only display the first 10 characters.
     func remformatDate(date: String) -> String {
 
@@ -88,11 +99,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let qType = self.questionType[indexPath.row]
         let answerPicked = self.answerLabel[indexPath.row]
+        print("Current question is: \(currentQuestion)")
+        print("Question Type is: \(qType)")
         print("Answer picked is: \(answerPicked)")
-        //let numQues = self.detailData[indexPath.row]
-        //performSegue(withIdentifier: "moveToQuestions", sender: title)
-        //        performSegue(withIdentifier: "moveToQuestions", sender: numQues)
     }
     
 
@@ -103,14 +114,19 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        //print("question type \(questionType)")
+        let lastElement = questionType.last
+        print("Last element in array: \(lastElement)")
         
-        if answerLabel[currentAnswer].range(of: "https://cdn.pixabay.com") != nil{
+        if lastElement == "multiple" {
+            cell.textLabel?.text = answerLabel[currentAnswer]
+        } else if lastElement == "images" {
 
-            let catPictureURL = URL(string: answerLabel[currentAnswer])!
+            let pictureURL = URL(string: answerLabel[currentAnswer])!
             
             let session = URLSession(configuration: .default)
 
-            let downloadPicTask = session.dataTask(with: catPictureURL) { (data, response, error) in
+            let downloadPicTask = session.dataTask(with: pictureURL) { (data, response, error) in
                 // The download has finished.
                 if let e = error {
                     print("Error downloading cat picture: \(e)")
@@ -133,7 +149,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             }
             
             downloadPicTask.resume()
-        } else {
+        } else if lastElement == "scale" {
+            cell.textLabel?.text = answerLabel[currentAnswer]
+        }
+        else {
             // Set cell colour, cell text colour and line seperator colour
             cell.textLabel?.text = answerLabel[currentAnswer]
         }
@@ -159,7 +178,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             
             tempCounter = currentQuestionCounter + 1
             currentQuestion = questionLabel[currentQuestionCounter]
-            print("Current Question is:  \(currentQuestion)")
+
             //print("Question \(currentQuestionCounter):  \(questionLabel[currentQuestionCounter])")
             questionField.text = "Question \(tempCounter): \(questionLabel[currentQuestionCounter])"
             answerLabel = []
@@ -185,22 +204,37 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                             if let surveyRow = survey["fields"] as? [String:Any] {
                                 
                                 if(surveyRow["surveyTitle"] as! String == self.surveyTitle && surveyRow["questionLabel"] as! String == self.currentQuestion)  {
+                                    do {
                                     self.answerLabel.append(surveyRow["answerLabel"] as! String)
+                                    self.questionType.append(surveyRow["questionType"] as! String)
+                                    self.scaleMin.append(surveyRow["scaleMinimum"] as! NSNumber)
+                                    self.scaleMax.append(surveyRow["scaleMaximum"] as! NSNumber)
                                     //self.numberOfAnswers.append(surveyRow["numberOfAnswers"] as! NSNumber)
+                                        
+                                    if(surveyRow["questionType"] as! String == "scale") {
+                                        var min = (Int(surveyRow["scaleMinimum"] as! NSNumber))
+                                        var max = (Int(surveyRow["scaleMaximum"] as! NSNumber))
+                                        self.answerLabel = []
+                                        
+                                        while min <= max {
+                                            self.answerLabel.append(String(min))
+                                            min = min + 1
+                                        }
+                                    }
+
                                     self.answerTable.reloadData()
+                                    } catch {
+                                        print("Error deserializing JSON: \(error)")
+                                    }
                                 }
-                                
-                                
-                                //let fiteredArray = (self.surveybelongto ).filter { $0 == self.surveyTitle }
-                                
-                                //self.detailData.append(surveyRow["numOfQuestions"] as! String)
-                                //self.tableView.reloadData()
                             }
                         }
                     }
                     
                 }
                 print(self.answerLabel)
+                print(self.scaleMax)
+            
             }
         }
     }
