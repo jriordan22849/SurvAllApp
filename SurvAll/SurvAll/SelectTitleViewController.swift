@@ -8,11 +8,16 @@
 
 import UIKit
 
-class SelectTitleViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
-    
+class SelectTitleViewController: UIViewController, UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
+
+
+    @IBOutlet weak var enteredDate: UITextField!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var answerTable: UITableView!
+    @IBOutlet weak var textF: UITextField?
+    
+    let textField = UITextField(frame: CGRect(x: 20, y: 20, width: 500.00, height: 100))
 
     var surveyTitle = "No Title"
     var surveyCreatedField = ""
@@ -43,9 +48,13 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
 
 
+    
+
     @IBAction func previousQuestionButton(_ sender: UIButton) {
+        
+        textField.isHidden = true
+        
         if currentQuestionCounter > 1 {
-            print("Q number \(currentQuestionCounter)")
             currentAnswer = 0
             currentQuestionCounter -= 2
             questions()
@@ -62,9 +71,9 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         //print(questionLabel[currentQuestionCounter])
         var tempCounter = questionLabel.count
         tempCounter = tempCounter + 1
+        textField.isHidden = true
         
         if currentQuestionCounter < tempCounter {
-            print("Q number \(currentQuestionCounter)")
             questions()
             self.answerTable.reloadData()
             currentAnswer = 0
@@ -100,12 +109,13 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         answerLabel.append("Survey Created: \(newDate)")
         answerLabel.append("Times Completed: \(timesCompleted)")
         
-        
+        textField.delegate = self
         answerTable.dataSource = self
         answerTable.delegate = self
         answerArray = []
         answerArray.append(surveyTitle)
-
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -124,15 +134,94 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let qType = self.questionType[indexPath.row]
-        let answerPicked = self.answerLabel[indexPath.row]
+
+        let lastElement = questionType.last
+        
+        // clear the text field.
+        textField.text = ""
+       
+        //let answerPicked = self.answerLabel[indexPath.row]
         print("Current question is: \(currentQuestion)")
-        print("Question Type is: \(qType)")
-        print("Answer picked is: \(answerPicked)")
+        
+        // Ge the question tpye so the user can be able to input answer.
+        let lastString = lastElement as String!
+        if NSString(string: lastString!).contains("date") {
+            
+            print("date type answer selected")
+            addTextField()
+            tableView.addSubview(textField)
+            tableView.reloadData()
+            
+        } else if NSString(string: lastString!).contains("time") {
+            
+            print("time type answer selected")
+            addTextField()
+            tableView.addSubview(textField)
+            tableView.reloadData()
+            
+        } else if NSString(string: lastString!).contains("text") {
+            
+            print("text type answer selected")
+            addTextField()
+            tableView.addSubview(textField)
+            tableView.reloadData()
+            
+        } else {
+            textField.isHidden = true
+        }
+        print("Question \(currentQuestionCounter) type is \(lastElement)")
+       // print("Answer picked is: \()")
+        //print("Optional(\"checkBox\")")
+        
         
         answerArray.append(currentQuestion)
-        answerArray.append(answerPicked)
+        //answerArray.append(answerPicked)
     }
+    
+    func addTextField() {
+        textField.isHidden = false
+        textField.textAlignment = NSTextAlignment.left
+        textField.textColor = UIColor.white
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Changre background colour depending on the insert operation, short answer, time, date
+        // Distingihs each task by colour.
+        let lastElement = questionType.last
+        let lastString = lastElement as String!
+        
+        if NSString(string: lastString!).contains("date") {
+            //purple colour
+            view.backgroundColor = UIColor(red: 88/255, green: 86/255, blue: 214/255, alpha: 1.0)
+            textField.keyboardType = UIKeyboardType.numbersAndPunctuation
+        } else if NSString(string: lastString!).contains("time") {
+            // pink colour
+            view.backgroundColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1.0)
+            textField.keyboardType = UIKeyboardType.numbersAndPunctuation
+            
+        } else if NSString(string: lastString!).contains("text") {
+            // orange colour
+             view.backgroundColor = UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1.0)
+             textField.keyboardType = UIKeyboardType.alphabet
+        }
+    }
+    
+    func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        //Hide the keyboard
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        print("Return Button hit")
+        view.backgroundColor = UIColor.white
+        return true;
+    }
+    
+    
+    
+    
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -141,7 +230,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        print("question type \(questionType)")
+       
         let lastElement = questionType.last
         //print("Last element in array: \(lastElement)")
         
@@ -160,7 +249,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                 } else {
 
                     if let res = response as? HTTPURLResponse {
-                        print("Downloaded picture:  \(res.statusCode)")
+                        //print("Downloaded picture:  \(res.statusCode)")
                         if let imageData = data {
                             // Finally convert that Data into an image and do what you wish with it.
                             let image = UIImage(data: imageData)
@@ -179,7 +268,13 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         } else if lastElement == "scale" {
             cell.textLabel?.text = answerLabel[currentAnswer]
         } else if lastElement == "text" {
-            cell.textLabel?.text = "Enter Answer"
+            cell.textLabel?.text = "Enter Short Answer"
+        } else if lastElement == "time" {
+            cell.textLabel?.text = "Enter Time Format (HH : MM)"
+        } else if lastElement == "date" {
+            cell.textLabel?.text = "Enter Date Format (YYYY/MM/DD)"
+            
+            
         }
             
         else {
@@ -197,6 +292,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
 
     
@@ -264,8 +360,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                     }
                     
                 }
-                print(self.answerLabel)
-                print(self.scaleMax)
+                //print(self.answerLabel)
+                //print(self.scaleMax)
             
             }
         }
