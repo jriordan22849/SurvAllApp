@@ -37,8 +37,26 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     var currentQuestion = ""
     var currentAnswer = 0
     
+    var answerArray = [String]()
     
     var selectedAnswers = [String]()
+    
+
+
+    @IBAction func previousQuestionButton(_ sender: UIButton) {
+        if currentQuestionCounter > 1 {
+            print("Q number \(currentQuestionCounter)")
+            currentAnswer = 0
+            currentQuestionCounter -= 2
+            questions()
+            self.answerTable.reloadData()
+
+           
+        } else {
+            print("index out of bounds")
+        }
+        
+    }
     @IBAction func nextButton(_ sender: UIButton) {
 
         //print(questionLabel[currentQuestionCounter])
@@ -46,6 +64,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         tempCounter = tempCounter + 1
         
         if currentQuestionCounter < tempCounter {
+            print("Q number \(currentQuestionCounter)")
             questions()
             self.answerTable.reloadData()
             currentAnswer = 0
@@ -58,6 +77,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     }
     
     
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,11 +103,15 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         
         answerTable.dataSource = self
         answerTable.delegate = self
+        answerArray = []
+        answerArray.append(surveyTitle)
 
         // Do any additional setup after loading the view.
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let esvc = segue.destination as! endScreenViewController
+        esvc.answerArray = answerArray
 
     }
     
@@ -104,9 +129,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         print("Current question is: \(currentQuestion)")
         print("Question Type is: \(qType)")
         print("Answer picked is: \(answerPicked)")
+        
+        answerArray.append(currentQuestion)
+        answerArray.append(answerPicked)
     }
     
-
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.answerLabel.count
@@ -114,9 +141,9 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        //print("question type \(questionType)")
+        print("question type \(questionType)")
         let lastElement = questionType.last
-        print("Last element in array: \(lastElement)")
+        //print("Last element in array: \(lastElement)")
         
         if lastElement == "multiple" {
             cell.textLabel?.text = answerLabel[currentAnswer]
@@ -151,7 +178,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             downloadPicTask.resume()
         } else if lastElement == "scale" {
             cell.textLabel?.text = answerLabel[currentAnswer]
+        } else if lastElement == "text" {
+            cell.textLabel?.text = "Enter Answer"
         }
+            
         else {
             // Set cell colour, cell text colour and line seperator colour
             cell.textLabel?.text = answerLabel[currentAnswer]
@@ -167,6 +197,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
     
     
     func questions() {
@@ -213,7 +245,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                                         
                                     if(surveyRow["questionType"] as! String == "scale") {
                                         var min = (Int(surveyRow["scaleMinimum"] as! NSNumber))
-                                        var max = (Int(surveyRow["scaleMaximum"] as! NSNumber))
+                                        let max = (Int(surveyRow["scaleMaximum"] as! NSNumber))
                                         self.answerLabel = []
                                         
                                         while min <= max {

@@ -22,15 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" SurvAll" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SM5-mK-79l">
-                                <rect key="frame" x="32" y="127" width="311" height="71"/>
-                                <color key="tintColor" red="0.20784313730000001" green="0.65490196079999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="63"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Afe-dd-24I">
-                                <rect key="frame" x="48" y="280" width="278" height="107"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Afe-dd-24I">
+                                <rect key="frame" x="16" y="310" width="343" height="77"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137254901957" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <color key="tintColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,24 +41,31 @@
                                     <segue destination="JbC-dJ-pcD" kind="show" id="Hj0-Pb-51q"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" SurvAll" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SM5-mK-79l">
+                                <rect key="frame" x="40.5" y="139" width="247.5" height="85"/>
+                                <color key="tintColor" red="0.20784313730000001" green="0.65490196079999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="73"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Afe-dd-24I" secondAttribute="bottom" constant="280" id="BuD-Ur-K4f"/>
-                            <constraint firstItem="SM5-mK-79l" firstAttribute="centerX" secondItem="Afe-dd-24I" secondAttribute="centerX" id="OSP-pC-Gps"/>
-                            <constraint firstItem="SM5-mK-79l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="63" id="PzX-XS-tJg"/>
-                            <constraint firstItem="Afe-dd-24I" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="QUo-5J-eh1"/>
-                            <constraint firstItem="SM5-mK-79l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bjD-sA-j4r"/>
-                            <constraint firstItem="SM5-mK-79l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="gbV-H4-wrV"/>
-                            <constraint firstItem="Afe-dd-24I" firstAttribute="top" secondItem="SM5-mK-79l" secondAttribute="bottom" constant="82" id="p5O-30-vsC"/>
-                            <constraint firstItem="Afe-dd-24I" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="33" id="sDh-gI-LKB"/>
+                            <constraint firstItem="SM5-mK-79l" firstAttribute="centerX" secondItem="Afe-dd-24I" secondAttribute="centerX" constant="-23.5" id="OSP-pC-Gps"/>
+                            <constraint firstItem="SM5-mK-79l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="75" id="PzX-XS-tJg"/>
+                            <constraint firstItem="Afe-dd-24I" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="15" id="QUo-5J-eh1"/>
+                            <constraint firstItem="SM5-mK-79l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-23.5" id="Zkf-Nf-eQy"/>
+                            <constraint firstItem="SM5-mK-79l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-23.5" id="bjD-sA-j4r"/>
+                            <constraint firstItem="Afe-dd-24I" firstAttribute="top" secondItem="SM5-mK-79l" secondAttribute="bottom" constant="86" id="p5O-30-vsC"/>
+                            <constraint firstItem="Afe-dd-24I" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sDh-gI-LKB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cWp-zc-8bw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="558" y="79"/>
+            <point key="canvasLocation" x="557.60000000000002" y="78.710644677661179"/>
         </scene>
         <!--Survey Table View Controller-->
         <scene sceneID="elS-p6-uyN">
@@ -76,16 +76,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.0" green="0.47843137254901957" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="U5v-lx-xkx">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="reuseIdentifier" textLabel="Ewl-Xu-9hd" detailTextLabel="bIp-Ti-lJD" rowHeight="143" style="IBUITableViewCellStyleSubtitle" id="NPu-s6-pxK">
-                                <rect key="frame" x="0.0" y="28" width="375" height="143"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="143"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NPu-s6-pxK" id="YR8-7Y-XUf">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="142"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="142.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ewl-Xu-9hd">
-                                            <rect key="frame" x="15" y="41" width="57" height="36"/>
+                                            <rect key="frame" x="15" y="42" width="57" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -93,7 +98,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Num. Questions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bIp-Ti-lJD">
-                                            <rect key="frame" x="15" y="77" width="144" height="24"/>
+                                            <rect key="frame" x="15" y="78" width="144" height="24"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -111,12 +116,21 @@
                             <outlet property="delegate" destination="JbC-dJ-pcD" id="7vh-o1-JKj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="VTf-6p-YS0"/>
                     <connections>
+                        <outlet property="searchDisplayController" destination="vms-ws-hoC" id="eYU-Jg-l7s"/>
+                        <outlet property="searchSurvey" destination="U5v-lx-xkx" id="14D-Dy-TZY"/>
                         <segue destination="Ji7-ev-Xn0" kind="show" identifier="moveToQuestions" id="YvH-4S-YVm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sS-lm-c0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="vms-ws-hoC">
+                    <connections>
+                        <outlet property="delegate" destination="JbC-dJ-pcD" id="RG8-kr-39q"/>
+                        <outlet property="searchContentsController" destination="JbC-dJ-pcD" id="I56-BE-qja"/>
+                        <outlet property="searchResultsDataSource" destination="JbC-dJ-pcD" id="m4q-TZ-Z5g"/>
+                        <outlet property="searchResultsDelegate" destination="JbC-dJ-pcD" id="Pvz-Wg-QaU"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1280.8" y="78.710644677661179"/>
         </scene>
@@ -137,7 +151,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Survey" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbW-bl-K84">
-                                <rect key="frame" x="21" y="30" width="333" height="48"/>
+                                <rect key="frame" x="21" y="74" width="333" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -176,15 +190,14 @@
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9tz-ez-LN0">
                                 <rect key="frame" x="43" y="123" width="109" height="33"/>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="aGO-xh-X56">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Question" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="aGO-xh-X56">
                                 <rect key="frame" x="21" y="123" width="333" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r49-Rp-AGS">
-                                <rect key="frame" x="215" y="578" width="160" height="89"/>
+                                <rect key="frame" x="181" y="578" width="194" height="89"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.29803921568627451" green="0.85098039215686272" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -195,12 +208,25 @@
                                     <action selector="nextButton:" destination="Ji7-ev-Xn0" eventType="touchUpInside" id="U8d-w2-sbL"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLo-Ki-2nZ">
+                                <rect key="frame" x="0.0" y="578" width="183" height="89"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <state key="normal" title="Previous">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="previousQuestionButton:" destination="Ji7-ev-Xn0" eventType="touchUpInside" id="d5s-1b-eMc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="9tz-ez-LN0" firstAttribute="centerX" secondItem="7vc-uw-omi" secondAttribute="centerX" id="3Dd-2l-CIJ"/>
                             <constraint firstItem="tbW-bl-K84" firstAttribute="leading" secondItem="7vc-uw-omi" secondAttribute="leadingMargin" constant="5" id="bBo-T6-OvH"/>
                             <constraint firstItem="tbW-bl-K84" firstAttribute="top" secondItem="ksz-KR-ypR" secondAttribute="bottom" constant="10" id="gkh-Uo-vHH"/>
+                            <constraint firstItem="o5Z-2E-Ffo" firstAttribute="top" secondItem="aGO-xh-X56" secondAttribute="bottom" constant="10" id="kn3-Sv-oNf"/>
                             <constraint firstItem="tbW-bl-K84" firstAttribute="centerX" secondItem="7vc-uw-omi" secondAttribute="centerX" id="p8D-gc-lgR"/>
                         </constraints>
                     </view>
@@ -298,6 +324,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aYT-Mx-Zyw"/>
+        <segue reference="Hj0-Pb-51q"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,8 +8,10 @@
 
 import UIKit
 
-class SurveyTableViewController: UITableViewController {
+class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
 
+    @IBOutlet weak var searchSurvey: UISearchBar!
+    
     var allData = [String]()
     var detailData = [String]()
     var surveyCreated = [String]()
@@ -23,6 +25,7 @@ class SurveyTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
+        searchSurvey.delegate = self
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -31,7 +34,61 @@ class SurveyTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.getAllSurveys()
+
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print(self.searchSurvey.text ?? "No search")
+        
+        // Filter results to what the user typed in.
+        
+        let url:String = "http://www.survall.top:8000/surveyData"
+        
+        HTTPRequest.getAllInBackground(url: url) { (completed, data) in
+            
+            DispatchQueue.main.async {
+                if completed {
+                    
+                    for record in data! {
+                        
+                        if let survey = record as? [String:Any] {
+                            
+                            if let surveyRow = survey["fields"] as? [String:Any] {
+                                if surveyRow["title"] as? String  == self.searchSurvey.text {
+                                    
+                                    // clear data from all the surveys
+                                    self.allData = []
+                                    self.detailData = []
+                                    self.surveyCreated = []
+                                    self.completed = []
+                                    
+                                    self.allData.append(surveyRow["title"] as! String)
+                                    self.detailData.append(surveyRow["numOfQuestions"] as! String)
+                                    self.surveyCreated.append(surveyRow["dateSurvCreated"] as! String)
+                                    self.completed.append(surveyRow["numOfTimesCompleted"] as! String)
+                                    //print(self.allData)
+                                    self.tableView.reloadData()
+                                    
+                                }
+                                
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print(self.searchSurvey.text ?? "No search")
+    }
+
+
+
+    
     
     func getAllSurveys() {
         
