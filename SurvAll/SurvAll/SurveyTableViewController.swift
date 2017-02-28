@@ -82,13 +82,12 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         
     }
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         print(self.searchSurvey.text ?? "No search")
+        searchSurvey.resignFirstResponder()
     }
-
-
-
     
+
     
     func getAllSurveys() {
         
