@@ -46,19 +46,26 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     var selectedAnswers = [String]()
     var buttonFlag = 0
     
+    var surveyLocked = ""
+    var passcode = ""
+    var access = true
+    
     @IBOutlet weak var questionNumberLabel: UILabel!
-
-
     @IBOutlet weak var progressionBar: UIProgressView!
+    
     @IBAction func previousQuestionButton(_ sender: UIButton) {
         
         textField.isHidden = true
+        
+        var prgressIncrement = Float(100/questionLabel.count)
+        prgressIncrement = Float(prgressIncrement/100)
         
         if currentQuestionCounter > 1 {
             currentAnswer = 0
             currentQuestionCounter -= 2
             questions()
             self.answerTable.reloadData()
+            progressionBar.progress -= prgressIncrement
 
            
         } else {
@@ -66,9 +73,24 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         }
         
     }
+    
     @IBAction func nextButton(_ sender: UIButton) {
         
-        print("Answer entered is: \(enteredData)")
+        enteredData = textField.text!
+        textField.text = ""
+        print("Typed answer \(enteredData)")
+        
+        if enteredData != "" {
+            answerArray.append(currentQuestion)
+            answerArray.append(enteredData)
+            enteredData = ""
+        }
+        
+        if access == false {
+            print("Raise notification to enter passcode")
+            alert()
+        }
+        
 
         //print(questionLabel[currentQuestionCounter])
         var tempCounter = questionLabel.count
@@ -77,10 +99,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         
         var prgressIncrement = Float(100/tempCounter)
         prgressIncrement = Float(prgressIncrement/100)
-        
-        print("proessionIncrement: \(prgressIncrement)")
 
-        
         if currentQuestionCounter < tempCounter {
             questions()
             self.answerTable.reloadData()
@@ -95,6 +114,49 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             performSegue(withIdentifier: "endOfSurvey", sender: self)
         }
     }
+    
+    // alert dislayed to the user where surveys require passcode.
+    func alert() {
+        let alertController = UIAlertController(title: "Enter Passcode?", message: "", preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
+            if let field = alertController.textFields?[0] {
+                // store your data
+                UserDefaults.standard.set(field.text, forKey: "passcode")
+                print("User entered in: \(field.text)")
+                print("Passcode for survey is \(self.passcode)")
+                
+                if field.text != self.passcode {
+                    //performSegue(withIdentifier: "moveToQuestions", sender: ")
+                    print("Passcode does not match")
+                    // go to previous view
+                    _ = self.navigationController?.popViewController(animated: true)
+                } else {
+                    print("Passcode match")
+                    self.access = true
+                }
+                UserDefaults.standard.synchronize()
+            } else {
+                // user did not fill field
+                _ = self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            // go to previous view
+            _ = self.navigationController?.popViewController(animated: true)
+        }
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Passcode"
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     
     
     
@@ -122,6 +184,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         answerLabel.append("Number of Questions: \(numQues)")
         answerLabel.append("Survey Created: \(newDate)")
         answerLabel.append("Times Completed: \(timesCompleted)")
+        answerLabel.append("Private: \(surveyLocked)")
+        
+        if surveyLocked == "yes" || surveyLocked == "YES"  {
+            access = false
+        }
         
         textField.delegate = self
         answerTable.dataSource = self
@@ -154,8 +221,6 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //Change color of the user seected answer, the color of the row
-
-
         let lastElement = questionType.last
         
         // clear the text field.
@@ -165,37 +230,14 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         let answerPicked = self.answerLabel[indexPath.row]
         print("Current question is: \(currentQuestion)")
  
-        
-        
         // Get the question tpye so the user can be able to input answer.
         let lastString = lastElement as String!
         if NSString(string: lastString!).contains("date") {
             
-            print("date type answer selected")
-            addTextField()
-            tableView.addSubview(textField)
-            tableView.reloadData()
-            
         } else if NSString(string: lastString!).contains("time") {
-            
-            print("time type answer selected")
-            addTextField()
-            tableView.addSubview(textField)
-            tableView.reloadData()
             
         } else if NSString(string: lastString!).contains("text") {
             
-            
-            print("text type answer selected")
-            addTextField()
-            tableView.addSubview(textField)
-            tableView.reloadData()
-            answerArray.append(currentQuestion)
-            if enteredData == "" {
-                // Do nothing
-            } else {
-                answerArray.append(enteredData)
-            }
         } else {
             textField.isHidden = true
             answerArray.append(currentQuestion)
@@ -306,13 +348,27 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             cell.textLabel?.text = answerLabel[currentAnswer]
             cell.textLabel?.textAlignment = .center
         } else if lastElement == "text" {
+            
+            
+            print("text type answer selected")
+            addTextField()
+            tableView.addSubview(textField)
             cell.textLabel?.text = "Enter Short Answer"
+            clearEnteredData()
+            
         } else if lastElement == "time" {
+            
+            addTextField()
+            tableView.addSubview(textField)
             cell.textLabel?.text = "Enter Time Format (HH : MM)"
+            clearEnteredData()
         } else if lastElement == "date" {
+            
+            addTextField()
+            tableView.addSubview(textField)
             cell.textLabel?.text = "Enter Date Format (YYYY/MM/DD)"
-            
-            
+            clearEnteredData()
+    
         }
             
         else {
@@ -337,6 +393,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func clearEnteredData() {
+        enteredData = ""
     }
     
     func questions() {

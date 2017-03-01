@@ -13,14 +13,18 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     @IBOutlet weak var searchSurvey: UISearchBar!
     
     var allData = [String]()
-    var detailData = [String]()
+    var detailData = [NSNumber]()
     var surveyCreated = [String]()
-    var completed = [String]()
+    var completed = [NSNumber]()
+    var locked = [String]()
+    var pCode = [String]()
     
     var titleSurvey = ""
     var numQues = ""
     var surveyCreation = ""
     var timesCompleted = ""
+    var surveyLocked = ""
+    var passcode = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +35,27 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        let testUIBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(addTapped))
+        self.navigationItem.rightBarButtonItem = testUIBarButtonItem
         
         self.getAllSurveys()
 
     }
     
+    func addTapped() {
+        print("Settings button tapped")
+    }
+    
+    func rightButtonAction(sender: UIBarButtonItem) {
+        
+    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print(self.searchSurvey.text ?? "No search")
         
         // Filter results to what the user typed in.
         
+        //let url:String = "Jonathan-2.local:8000/surveyData"
         let url:String = "http://www.survall.top:8000/surveyData"
         
         HTTPRequest.getAllInBackground(url: url) { (completed, data) in
@@ -61,11 +75,15 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
                                     self.detailData = []
                                     self.surveyCreated = []
                                     self.completed = []
+                                    self.locked = []
+                                    self.pCode = []
                                     
                                     self.allData.append(surveyRow["title"] as! String)
-                                    self.detailData.append(surveyRow["numOfQuestions"] as! String)
+                                    self.detailData.append(surveyRow["numOfQuestions"] as! NSNumber)
                                     self.surveyCreated.append(surveyRow["dateSurvCreated"] as! String)
-                                    self.completed.append(surveyRow["numOfTimesCompleted"] as! String)
+                                    self.completed.append(surveyRow["numOfTimesCompleted"] as! NSNumber)
+                                    self.locked.append(surveyRow["private"] as! String)
+                                    self.pCode.append(surveyRow["passcode"] as! String)
                                     //print(self.allData)
                                     self.tableView.reloadData()
                                     
@@ -91,6 +109,7 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     
     func getAllSurveys() {
         
+        //let url:String = "Jonathan-2.local:8000/surveyData/"
         let url:String = "http://www.survall.top:8000/surveyData"
         
         HTTPRequest.getAllInBackground(url: url) { (completed, data) in
@@ -105,9 +124,11 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
                             if let surveyRow = survey["fields"] as? [String:Any] {
                                 
                                 self.allData.append(surveyRow["title"] as! String)
-                                self.detailData.append(surveyRow["numOfQuestions"] as! String)
+                                self.detailData.append(surveyRow["numOfQuestions"] as! NSNumber)
                                 self.surveyCreated.append(surveyRow["dateSurvCreated"] as! String)
-                                self.completed.append(surveyRow["numOfTimesCompleted"] as! String)
+                                self.completed.append(surveyRow["numOfTimesCompleted"] as! NSNumber)
+                                self.locked.append(surveyRow["private"] as! String)
+                                self.pCode.append(surveyRow["passcode"] as! String)
                                 //print(self.allData)
                                 self.tableView.reloadData()
                             }
@@ -147,9 +168,11 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         titleSurvey = self.allData[indexPath.row]
-        numQues = self.detailData[indexPath.row]
+        numQues = String(describing: self.detailData[indexPath.row])
         surveyCreation = self.surveyCreated[indexPath.row]
-        timesCompleted = self.completed[indexPath.row]
+        timesCompleted = String(describing: self.completed[indexPath.row])
+        surveyLocked = self.locked[indexPath.row]
+        passcode = self.pCode[indexPath.row]
         performSegue(withIdentifier: "moveToQuestions", sender: self)
 //        performSegue(withIdentifier: "moveToQuestions", sender: numQues)
     }
@@ -160,6 +183,8 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         vc.numQues = numQues
         vc.surveyCreated = surveyCreation
         vc.timesCompleted = timesCompleted
+        vc.surveyLocked = surveyLocked
+        vc.passcode = passcode
     }
     
     /*

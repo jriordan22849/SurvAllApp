@@ -319,9 +319,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-LU-oR5">
-                                <rect key="frame" x="0.0" y="304" width="375" height="58"/>
-                                <color key="backgroundColor" red="0.3529411764705882" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-LU-oR5">
+                                <rect key="frame" x="19" y="350" width="337" height="127"/>
+                                <color key="backgroundColor" red="0.98948138952255249" green="0.48568063974380493" blue="0.25788608193397522" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                 <state key="normal" title="Home">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -331,7 +331,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="hgV-LU-oR5" firstAttribute="centerY" secondItem="7Lz-1u-o33" secondAttribute="centerY" id="EET-vx-S9b"/>
                             <constraint firstItem="GDf-zj-Gcf" firstAttribute="leading" secondItem="lKT-i6-b7B" secondAttribute="leading" id="I9m-y7-hVM"/>
@@ -373,8 +373,21 @@
             </objects>
             <point key="canvasLocation" x="-207.19999999999999" y="78.710644677661179"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="yGB-Be-kdH">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Oq-n8-dDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="njb-eI-EMB" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tZS-T9-Z1r">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+            </objects>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aYT-Mx-Zyw"/>
+        <segue reference="Hj0-Pb-51q"/>
     </inferredMetricsTieBreakers>
 </document>
