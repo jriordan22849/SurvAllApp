@@ -26,6 +26,8 @@ class endScreenViewController: UIViewController {
             print("\n\n\n")
             print("JSON Data is \(jsonData)")
             
+            //readplistfile ?? "localhostname"
+            
             // create POST request
             let url = URL(string: "http://survall.top:8000/postSurvey/")!
             var request = URLRequest(url: url)

@@ -50,6 +50,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     var passcode = ""
     var access = true
     
+    var val: validation?
+    
     @IBOutlet weak var questionNumberLabel: UILabel!
     @IBOutlet weak var progressionBar: UIProgressView!
     
@@ -76,9 +78,25 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     @IBAction func nextButton(_ sender: UIButton) {
         
+        var moveToNextQuestion = true
         enteredData = textField.text!
         textField.text = ""
         print("Typed answer \(enteredData)")
+        
+        // Validate the input of data entered.
+        let lastElement = questionType.last
+        var lastString = lastElement as String!
+        
+        if lastString == nil {
+            lastString = ""
+        }
+        
+        val = validation(question: currentQuestion,inputedData: enteredData,questionType: (lastString )!)
+        
+        if val!.description() == false {
+            moveToNextQuestion = false
+            enteredData = ""
+        }
         
         if enteredData != "" {
             answerArray.append(currentQuestion)
@@ -93,26 +111,32 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         
 
         //print(questionLabel[currentQuestionCounter])
-        var tempCounter = questionLabel.count
-        tempCounter = tempCounter + 1
-        textField.isHidden = true
         
-        var prgressIncrement = Float(100/tempCounter)
-        prgressIncrement = Float(prgressIncrement/100)
-
-        if currentQuestionCounter < tempCounter {
-            questions()
-            self.answerTable.reloadData()
-            currentAnswer = 0
-            currentQuestionCounter += 1
+        if moveToNextQuestion == true {
             
-            // increment the progression bar
-            progressionBar.progress += prgressIncrement
+            var tempCounter = questionLabel.count
+            tempCounter = tempCounter + 1
+            textField.isHidden = true
+            
+            var prgressIncrement = Float(100/tempCounter)
+            prgressIncrement = Float(prgressIncrement/100)
+            
+            if currentQuestionCounter < tempCounter {
+                questions()
+                self.answerTable.reloadData()
+                currentAnswer = 0
+                currentQuestionCounter += 1
+                
+                // increment the progression bar
+                progressionBar.progress += prgressIncrement
+            }
+            if currentQuestionCounter >= tempCounter {
+                currentQuestionCounter = 0
+                performSegue(withIdentifier: "endOfSurvey", sender: self)
+            }
+            
         }
-        if currentQuestionCounter >= tempCounter {
-            currentQuestionCounter = 0
-            performSegue(withIdentifier: "endOfSurvey", sender: self)
-        }
+
     }
     
     // alert dislayed to the user where surveys require passcode.
@@ -366,9 +390,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             
             addTextField()
             tableView.addSubview(textField)
-            cell.textLabel?.text = "Enter Date Format (YYYY/MM/DD)"
+            cell.textLabel?.text = "Enter Date Format (DD/MM/YYYY)"
             clearEnteredData()
-    
         }
             
         else {

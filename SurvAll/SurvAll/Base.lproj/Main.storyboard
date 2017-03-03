@@ -86,11 +86,11 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="143"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NPu-s6-pxK" id="YR8-7Y-XUf">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="142.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="142"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ewl-Xu-9hd">
-                                            <rect key="frame" x="15" y="42" width="57" height="36"/>
+                                            <rect key="frame" x="15" y="41" width="57" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -98,7 +98,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Num. Questions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bIp-Ti-lJD">
-                                            <rect key="frame" x="15" y="78" width="144" height="24"/>
+                                            <rect key="frame" x="15" y="77" width="144" height="24"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -120,6 +120,7 @@
                         <outlet property="searchDisplayController" destination="vms-ws-hoC" id="eYU-Jg-l7s"/>
                         <outlet property="searchSurvey" destination="U5v-lx-xkx" id="14D-Dy-TZY"/>
                         <segue destination="Ji7-ev-Xn0" kind="show" identifier="moveToQuestions" id="YvH-4S-YVm"/>
+                        <segue destination="zH5-SF-vrU" kind="show" identifier="settingsController" id="ZL2-eN-cXe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sS-lm-c0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -151,7 +152,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Survey" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbW-bl-K84">
-                                <rect key="frame" x="21" y="30" width="333" height="31.5"/>
+                                <rect key="frame" x="21" y="74" width="333" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -292,6 +293,75 @@
             </objects>
             <point key="canvasLocation" x="3269.5999999999999" y="-618.44077961019491"/>
         </scene>
+        <!--Settings Controller-->
+        <scene sceneID="HfB-F3-oFG">
+            <objects>
+                <viewController id="zH5-SF-vrU" customClass="settingsController" customModule="SurvAll" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nTc-GI-ui9"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fl8-Th-vZW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iTb-uF-HwY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="25" minValue="20" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="NRL-1b-d5s">
+                                <rect key="frame" x="14" y="203" width="347" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="fontSlider:" destination="zH5-SF-vrU" eventType="valueChanged" id="qj5-nF-2Vr"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change Font Size" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkQ-xL-jM9">
+                                <rect key="frame" x="16" y="52" width="343" height="143"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Screen Magnifier" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAg-cS-vnb">
+                                <rect key="frame" x="16" y="276" width="343" height="115"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-Yn-0jc">
+                                <rect key="frame" x="163" y="406" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="sccreenMagnifierSwitch:" destination="zH5-SF-vrU" eventType="valueChanged" id="28b-bK-6oM"/>
+                                </connections>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Awn-lU-BPd">
+                                <rect key="frame" x="65" y="570" width="244" height="77"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButton:" destination="zH5-SF-vrU" eventType="touchUpInside" id="vGs-Ta-Hau"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="screenMagLabel" destination="HAg-cS-vnb" id="adP-qK-cRK"/>
+                        <outlet property="screenMagnifierLabel" destination="PkQ-xL-jM9" id="LEp-yj-AO3"/>
+                        <outlet property="slider" destination="NRL-1b-d5s" id="9ij-6G-f9U"/>
+                        <segue destination="JbC-dJ-pcD" kind="show" identifier="settingsToMain" id="EiP-hJ-Sbs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fsa-wy-fsm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="880.79999999999995" y="-671.51424287856082"/>
+        </scene>
         <!--End Screen View Controller-->
         <scene sceneID="llY-Ai-lFr">
             <objects>
@@ -376,18 +446,22 @@
         <!--View Controller-->
         <scene sceneID="yGB-Be-kdH">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Oq-n8-dDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="njb-eI-EMB" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1a9-Ot-gib"/>
+                        <viewControllerLayoutGuide type="bottom" id="R2l-hi-yfh"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tZS-T9-Z1r">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Oq-n8-dDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hj0-Pb-51q"/>
+        <segue reference="EiP-hJ-Sbs"/>
     </inferredMetricsTieBreakers>
 </document>

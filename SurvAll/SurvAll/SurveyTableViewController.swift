@@ -25,11 +25,19 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     var timesCompleted = ""
     var surveyLocked = ""
     var passcode = ""
+    var textSize = 21
+    
+    var sugueMove = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
         searchSurvey.delegate = self
+        
+        print("Text Size = \(textSize)")
+        
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -45,11 +53,14 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     
     func addTapped() {
         print("Settings button tapped")
+        sugueMove = false
+        performSegue(withIdentifier: "settingsController", sender: self)
     }
     
     func rightButtonAction(sender: UIBarButtonItem) {
         
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print(self.searchSurvey.text ?? "No search")
         
@@ -163,6 +174,9 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
 
         cell.textLabel?.text = self.allData[indexPath.row]
         cell.detailTextLabel?.text = "Number of Questions: \(self.detailData[indexPath.row])"
+        
+        // Change the font size if user changed it im the settings. 
+        cell.textLabel?.font = cell.textLabel?.font.withSize(CGFloat(textSize))
         return cell
     }
     
@@ -173,19 +187,32 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         timesCompleted = String(describing: self.completed[indexPath.row])
         surveyLocked = self.locked[indexPath.row]
         passcode = self.pCode[indexPath.row]
+        sugueMove = true
         performSegue(withIdentifier: "moveToQuestions", sender: self)
-//        performSegue(withIdentifier: "moveToQuestions", sender: numQues)
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! SelectTitleViewController
-        vc.surveyTitle = titleSurvey
-        vc.numQues = numQues
-        vc.surveyCreated = surveyCreation
-        vc.timesCompleted = timesCompleted
-        vc.surveyLocked = surveyLocked
-        vc.passcode = passcode
+        
+        if sugueMove{
+            
+            let vc = segue.destination as! SelectTitleViewController
+            vc.surveyTitle = titleSurvey
+            vc.numQues = numQues
+            vc.surveyCreated = surveyCreation
+            vc.timesCompleted = timesCompleted
+            vc.surveyLocked = surveyLocked
+            vc.passcode = passcode
+            
+        }
+
+        
+        if !sugueMove {
+            let settings = segue.destination as! settingsController
+            settings.textSize = textSize
+        }
     }
+
     
     /*
     // Override to support conditional editing of the table view.
