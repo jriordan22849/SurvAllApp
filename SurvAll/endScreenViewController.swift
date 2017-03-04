@@ -16,6 +16,7 @@ class endScreenViewController: UIViewController {
     
     let size = UserDefaults.standard.double(forKey: "textsize")
     let sr = UserDefaults.standard.bool(forKey: "screenReaderAcvive")
+    let sPace = UserDefaults.standard.double(forKey: "speechpace")
     let mySynthesizer = AVSpeechSynthesizer()
     
     var answerArray = [String]()
