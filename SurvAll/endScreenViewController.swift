@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class endScreenViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class endScreenViewController: UIViewController {
     
     let size = UserDefaults.standard.double(forKey: "textsize")
     let sr = UserDefaults.standard.bool(forKey: "screenReaderAcvive")
+    let mySynthesizer = AVSpeechSynthesizer()
     
     var answerArray = [String]()
     
@@ -96,6 +98,15 @@ class endScreenViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+    }
+    
+    
+    func textToSpeech(text : String) {
+        let speech = AVSpeechUtterance(string: text)
+        speech.rate = AVSpeechUtteranceMinimumSpeechRate
+        speech.voice = AVSpeechSynthesisVoice(language: "en-us")
+        speech.pitchMultiplier = Float(sPace)
+        mySynthesizer.speak(speech)
     }
     
 
