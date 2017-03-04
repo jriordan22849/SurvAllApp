@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SelectTitleViewController: UIViewController, UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
 
-
+    
+    let size = UserDefaults.standard.double(forKey: "textsize")
+    let sPace = UserDefaults.standard.double(forKey: "speechpace")
+    
     @IBOutlet weak var enteredDate: UITextField!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var answerTable: UITableView!
     @IBOutlet weak var textF: UITextField?
     
-    let textField = UITextField(frame: CGRect(x: 20, y: 20, width: 400.00, height: 100))
+    let textField = UITextField(frame: CGRect(x: 0, y: 60, width: 400, height: 300))
     
     var cellPressed = false
 
@@ -45,14 +49,15 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     var answerArray = [String]()
     var selectedAnswers = [String]()
     var buttonFlag = 0
-    
     var surveyLocked = ""
     var passcode = ""
     var access = true
+    let mySynthesizer = AVSpeechSynthesizer()
     
     var val: validation?
     
-    @IBOutlet weak var questionNumberLabel: UILabel!
+    let sr = UserDefaults.standard.bool(forKey: "screenReaderAcvive")
+ 
     @IBOutlet weak var progressionBar: UIProgressView!
     
     @IBAction func previousQuestionButton(_ sender: UIButton) {
@@ -68,6 +73,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             questions()
             self.answerTable.reloadData()
             progressionBar.progress -= prgressIncrement
+            
+            if sr {
+                textToSpeech(text: "Previous Button Pressed")
+            }
 
            
         } else {
@@ -106,6 +115,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         
         if access == false {
             print("Raise notification to enter passcode")
+            
+            if sr {
+                textToSpeech(text: "Enter Passcode")
+            }
+            
             alert()
         }
         
@@ -113,6 +127,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         //print(questionLabel[currentQuestionCounter])
         
         if moveToNextQuestion == true {
+            
+            if sr {
+                textToSpeech(text: "Next Button Pressed")
+            }
             
             var tempCounter = questionLabel.count
             tempCounter = tempCounter + 1
@@ -131,6 +149,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                 progressionBar.progress += prgressIncrement
             }
             if currentQuestionCounter >= tempCounter {
+                
+                if sr {
+                    textToSpeech(text: "End of Survey")
+                }
+                
                 currentQuestionCounter = 0
                 performSegue(withIdentifier: "endOfSurvey", sender: self)
             }
@@ -180,6 +203,14 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    func textToSpeech(text : String) {
+        let speech = AVSpeechUtterance(string: text)
+        speech.rate = AVSpeechUtteranceMinimumSpeechRate
+        speech.voice = AVSpeechSynthesisVoice(language: "en-us")
+        speech.pitchMultiplier = Float(sPace)
+        mySynthesizer.speak(speech)
+    }
 
     
     
@@ -197,6 +228,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         
        // titleLabel.text = surveyTitle
         questionField.text =  "Survey Details:"
+        questionField.font = questionField.font.withSize(CGFloat(size))
+        
         self.getAllQuestions()
        
         
@@ -223,6 +256,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         // set the survey title to the navigation bar.
         self.navigationItem.title = surveyTitle
         
+
         // Do any additional setup after loading the view.
     }
     
@@ -266,6 +300,11 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             textField.isHidden = true
             answerArray.append(currentQuestion)
             answerArray.append(answerPicked)
+            
+            if sr {
+                textToSpeech(text: "Answer picked is: \(answerPicked)")
+            }
+            
             print("Answer picked is: \(answerPicked)")
         }
 
@@ -277,15 +316,9 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         }
     }
     
-    func addTextField() {
-        textField.isHidden = false
-        textField.textAlignment = NSTextAlignment.left
-        textField.textColor = UIColor.white
-        textField.adjustsFontSizeToFitWidth = true
-    }
+
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
         // Distingihs each task by colour.
         let lastElement = questionType.last
         let lastString = lastElement as String!
@@ -294,15 +327,17 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             //purple colour
             view.backgroundColor = UIColor(red: 88/255, green: 86/255, blue: 214/255, alpha: 1.0)
             textField.keyboardType = UIKeyboardType.numbersAndPunctuation
+
         } else if NSString(string: lastString!).contains("time") {
             // pink colour
             view.backgroundColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1.0)
             textField.keyboardType = UIKeyboardType.numbersAndPunctuation
-            
+
         } else if NSString(string: lastString!).contains("text") {
             // orange colour
              view.backgroundColor = UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1.0)
              textField.keyboardType = UIKeyboardType.alphabet
+
         }
     }
     
@@ -322,18 +357,45 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         return self.answerLabel.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let returnInt = Int(self.size) * 4
+        let cgfloat = CGFloat(returnInt)
+        
+        return cgfloat
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        
         let lastElement = questionType.last
-        print("Last element in array: \(lastElement)")
-        if lastElement == "checkBox" {
-            cell.textLabel?.text = answerLabel[currentAnswer]
+        var type = ""
+        
+        cell.textLabel?.font = cell.textLabel?.font.withSize(CGFloat(size))
+
+        cell.textLabel?.numberOfLines = 5
+        cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        
+        //Display text in center of cell for the following question types.
+        if (lastElement == "checkBox" || lastElement == "multiple" || lastElement == "scale" ||
+            lastElement == "text" || lastElement == "time" || lastElement == "date" || lastElement == "images") {
             cell.textLabel?.textAlignment = .center
         }
-        else if lastElement == "multiple" {
+    
+        
+        
+        print("Last element in array: \(lastElement)")
+        if lastElement == "checkBox" {
+            if sr {
+                textToSpeech(text: answerLabel[currentAnswer])
+            }
             cell.textLabel?.text = answerLabel[currentAnswer]
-            cell.textLabel?.textAlignment = .center
+        }
+        else if lastElement == "multiple" {
+            if sr {
+                textToSpeech(text: answerLabel[currentAnswer])
+            }
+            cell.textLabel?.text = answerLabel[currentAnswer]
+
         } else if lastElement == "images" {
 
             let pictureURL = URL(string: answerLabel[currentAnswer])!
@@ -369,28 +431,26 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             
             downloadPicTask.resume()
         } else if lastElement == "scale" {
+            if sr {
+                textToSpeech(text: answerLabel[currentAnswer])
+            }
             cell.textLabel?.text = answerLabel[currentAnswer]
-            cell.textLabel?.textAlignment = .center
         } else if lastElement == "text" {
-            
-            
-            print("text type answer selected")
-            addTextField()
+            type = "Enter Answer"
+            addTextField(typePlaceholder: type)
             tableView.addSubview(textField)
-            cell.textLabel?.text = "Enter Short Answer"
             clearEnteredData()
             
         } else if lastElement == "time" {
             
-            addTextField()
+            type = "Enter Time"
             tableView.addSubview(textField)
-            cell.textLabel?.text = "Enter Time Format (HH : MM)"
+            addTextField(typePlaceholder: type)
             clearEnteredData()
         } else if lastElement == "date" {
-            
-            addTextField()
+            type = "Enter Date"
             tableView.addSubview(textField)
-            cell.textLabel?.text = "Enter Date Format (DD/MM/YYYY)"
+            addTextField(typePlaceholder: type)
             clearEnteredData()
         }
             
@@ -398,6 +458,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             // Set cell colour, cell text colour and line seperator colour
             cell.textLabel?.text = answerLabel[currentAnswer]
         }
+        
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.textColor = UIColor.white
         
@@ -411,8 +472,17 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         return cell
     }
     
-
+    func addTextField(typePlaceholder: String) {
+        textField.attributedPlaceholder = NSAttributedString(string: typePlaceholder, attributes: [NSForegroundColorAttributeName : UIColor.white])
+        textField.backgroundColor = UIColor.blue
+        textField.textColor = UIColor.white
+        textField.isHidden = false
+        textField.textAlignment = NSTextAlignment.left
+        textField.font = .systemFont(ofSize: 30)
+        textField.adjustsFontSizeToFitWidth = true
+    }
     
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -433,10 +503,14 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             currentQuestion = questionLabel[currentQuestionCounter]
 
             //print("Question \(currentQuestionCounter):  \(questionLabel[currentQuestionCounter])")
-            questionField.text = "\(questionLabel[currentQuestionCounter])"
             
-            // display the question numnber in the label.
-            questionNumberLabel.text = "Question \(tempCounter)"
+            if sr {
+                textToSpeech(text: questionLabel[currentQuestionCounter])
+            }
+            
+            questionField.text = "\(questionLabel[currentQuestionCounter])"
+            self.navigationItem.title = surveyTitle + "-" + "Question \(tempCounter)"
+
             answerLabel = []
             self.getAllAnswers()
             

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
 
@@ -18,7 +19,6 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     var completed = [NSNumber]()
     var locked = [String]()
     var pCode = [String]()
-    
     var titleSurvey = ""
     var numQues = ""
     var surveyCreation = ""
@@ -26,9 +26,12 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     var surveyLocked = ""
     var passcode = ""
     var textSize = 21
-    
     var sugueMove = true
+    let mySynthesizer = AVSpeechSynthesizer()
     
+    let size = UserDefaults.standard.double(forKey: "textsize") ?? 21.0
+    let sr = UserDefaults.standard.bool(forKey: "screenReaderAcvive")
+    let sPace = UserDefaults.standard.double(forKey: "speechpace")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,19 +39,20 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         searchSurvey.delegate = self
         
         print("Text Size = \(textSize)")
-        
 
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        
         let testUIBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(addTapped))
         self.navigationItem.rightBarButtonItem = testUIBarButtonItem
         
         self.getAllSurveys()
 
+    }
+    
+    func textToSpeech(text : String) {
+        let speech = AVSpeechUtterance(string: text)
+        speech.rate = AVSpeechUtteranceMinimumSpeechRate
+        speech.voice = AVSpeechSynthesisVoice(language: "en-us")
+        speech.pitchMultiplier = Float(sPace)
+        mySynthesizer.speak(speech)
     }
     
     func addTapped() {
@@ -176,11 +180,19 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         cell.detailTextLabel?.text = "Number of Questions: \(self.detailData[indexPath.row])"
         
         // Change the font size if user changed it im the settings. 
-        cell.textLabel?.font = cell.textLabel?.font.withSize(CGFloat(textSize))
+        cell.textLabel?.font = cell.textLabel?.font.withSize(CGFloat(size))
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("SR: \(sr)")
+        if sr {
+            textToSpeech(text: self.allData[indexPath.row])
+        }
+        
+
+        
         titleSurvey = self.allData[indexPath.row]
         numQues = String(describing: self.detailData[indexPath.row])
         surveyCreation = self.surveyCreated[indexPath.row]
