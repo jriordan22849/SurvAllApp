@@ -108,6 +108,8 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         }
         
         if enteredData != "" {
+            
+            // Save answer to the db
             answerArray.append(currentQuestion)
             answerArray.append(enteredData)
             enteredData = ""
@@ -212,11 +214,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         mySynthesizer.speak(speech)
     }
 
-    
-    
-    
-
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.answerTable.tableFooterView = UIView()
@@ -296,8 +294,10 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
             
         } else if NSString(string: lastString!).contains("text") {
             
-        } else {
+        }   else {
             textField.isHidden = true
+            
+
             answerArray.append(currentQuestion)
             answerArray.append(answerPicked)
             
@@ -411,15 +411,21 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                     if (response as? HTTPURLResponse) != nil {
                         //print("Downloaded picture:  \(res.statusCode)")
                         if let imageData = data {
-                            _ = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 100, height: 100))
-  
-                            // Finally convert that Data into an image and do what you wish with it.
-                            let image = UIImage(data: imageData)
-                            //cell.textLabel?.text = "Image \(self.answerLabel[self.currentAnswer])"
-                            cell.imageView?.image = image
-                            cell.imageView?.center = cell.center
-                            cell.imageView?.startAnimating()
-                            cell.setNeedsLayout()
+                            
+                            
+                            // Display the images using the main thread
+                            DispatchQueue.main.async(execute: {
+                                
+                                // Finally convert that Data into an image and do what you wish with it.
+                                let image = UIImage(data: imageData, scale: CGFloat(1))
+//                                cell.textLabel?.text = "Image \(self.currentAnswer)"
+                                cell.imageView?.image = image
+                               // cell.imageView?.center = cell.center;
+                                cell.setNeedsLayout()
+
+                            })
+                            
+                            
                         } else {
                             print("Image not found")
                         }
@@ -457,6 +463,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
         else {
             // Set cell colour, cell text colour and line seperator colour
             cell.textLabel?.text = answerLabel[currentAnswer]
+            cell.isUserInteractionEnabled = false
         }
         
         cell.backgroundColor = UIColor.clear
@@ -474,7 +481,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
     
     func addTextField(typePlaceholder: String) {
         textField.attributedPlaceholder = NSAttributedString(string: typePlaceholder, attributes: [NSForegroundColorAttributeName : UIColor.white])
-        textField.backgroundColor = UIColor.blue
+        textField.backgroundColor = UIColor.clear
         textField.textColor = UIColor.white
         textField.isHidden = false
         textField.textAlignment = NSTextAlignment.left

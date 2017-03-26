@@ -29,7 +29,7 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
     var sugueMove = true
     let mySynthesizer = AVSpeechSynthesizer()
     
-    let size = UserDefaults.standard.double(forKey: "textsize") ?? 21.0
+    let size = UserDefaults.standard.double(forKey: "textsize") 
     let sr = UserDefaults.standard.bool(forKey: "screenReaderAcvive")
     let sPace = UserDefaults.standard.double(forKey: "speechpace")
     
@@ -115,7 +115,7 @@ class SurveyTableViewController: UITableViewController,UISearchBarDelegate {
         
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    @nonobjc func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         print(self.searchSurvey.text ?? "No search")
         searchSurvey.resignFirstResponder()
     }
