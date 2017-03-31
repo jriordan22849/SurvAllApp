@@ -415,8 +415,7 @@ class SelectTitleViewController: UIViewController, UITableViewDataSource,UITable
                             
                             // Display the images using the main thread
                             DispatchQueue.main.async(execute: {
-                                
-                                // Finally convert that Data into an image and do what you wish with it.
+                            
                                 let image = UIImage(data: imageData, scale: CGFloat(1))
 //                                cell.textLabel?.text = "Image \(self.currentAnswer)"
                                 cell.imageView?.image = image
