@@ -129,7 +129,7 @@ class settingsController: UIViewController,AVSpeechSynthesizerDelegate {
         let sPace = UserDefaults.standard.double(forKey: "speechpace")
         
         screenMagnifierLabel.text = "Change Font Size"
-        screenReaderLabel.text = "Screen Reader"
+        screenReaderLabel.text = "Settings Application"
        
         slider.value = Float(textSize)
         screenReaderButton.isOn = sr
